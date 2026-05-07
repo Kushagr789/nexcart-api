@@ -8,3 +8,32 @@
 # Datasource local storage ignored files
 /dataSources/
 /dataSources.local.xml
+# Maven
+target/
+!.mvn/wrapper/maven-wrapper.jar
+
+# IntelliJ
+.idea/
+*.iml
+
+# VS Code
+.vscode/
+
+# Logs
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Env
+.env
+
+# Build
+/out/
+
+# Local configs
+application-local.properties
+
+# Java
+*.class
