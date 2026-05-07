@@ -33,7 +33,7 @@ Thumbs.db
 /out/
 
 # Local configs
-application-local.properties
+src/main/resources/application-local.properties
 
 # Java
 *.class
