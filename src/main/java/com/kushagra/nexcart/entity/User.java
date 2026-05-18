@@ -1,6 +1,7 @@
 package com.kushagra.nexcart.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.kushagra.nexcart.enums.SellerStatus;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -70,10 +71,16 @@ public class User implements UserDetails {
     @UpdateTimestamp
     private Instant updatedAt;
 
+    @Column(length = 100)
+    private String storeName;
+
+    @Enumerated(EnumType.STRING)
+    private SellerStatus sellerStatus;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return roles.stream()
-                .map(role -> new SimpleGrantedAuthority("ROLE_" + role.getName().name()))
+                .map(role -> new SimpleGrantedAuthority(role.getName().name()))
                 .toList();
     }
 
