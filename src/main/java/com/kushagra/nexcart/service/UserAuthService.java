@@ -43,7 +43,7 @@ public class UserAuthService {
 
     public UserRegisterResponse register(RegisterRequest request) {
 
-        if (request.getRole() == RoleName.ADMIN) {
+        if (request.getRole() == RoleName.ROLE_ADMIN) {
             throw new RuntimeException("Admin registration is not allowed");
         }
 
