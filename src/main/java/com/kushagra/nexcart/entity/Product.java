@@ -54,10 +54,9 @@ public class Product {
     @Column(nullable = false)
     private ProductStatus status;
 
-    // SELLER
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "seller_id")
-    private User seller;
+    @ManyToOne
+    @JoinColumn(name = "store_id")
+    private Store store;
 
     // MULTIPLE CATEGORIES
     @ManyToMany
