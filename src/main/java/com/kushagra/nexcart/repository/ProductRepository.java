@@ -12,8 +12,8 @@ public interface ProductRepository
         extends JpaRepository<Product, Long> {
 
     // SELLER PRODUCTS
-    Page<Product> findBySeller(
-            User seller,
+    Page<Product> findByStoreOwner(
+            User owner,
             Pageable pageable
     );
 
@@ -34,6 +34,22 @@ public interface ProductRepository
     Page<Product>
     findByCategories_Id(
             Long categoryId,
+            Pageable pageable
+    );
+
+    Page<Product> findByStoreId(
+            Long storeId,
+            Pageable pageable
+    );
+
+    Page<Product> findByStoreSlug(
+            String slug,
+            Pageable pageable
+    );
+
+    Page<Product> findByStoreOwnerAndStatus(
+            User owner,
+            ProductStatus status,
             Pageable pageable
     );
 }
