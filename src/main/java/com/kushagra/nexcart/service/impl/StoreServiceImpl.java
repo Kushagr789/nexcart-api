@@ -4,7 +4,6 @@ import com.kushagra.nexcart.dto.request.StoreRequest;
 import com.kushagra.nexcart.dto.response.StoreResponse;
 import com.kushagra.nexcart.entity.Store;
 import com.kushagra.nexcart.entity.User;
-import com.kushagra.nexcart.enums.RoleName;
 import com.kushagra.nexcart.enums.StoreStatus;
 import com.kushagra.nexcart.exception.BadRequestException;
 import com.kushagra.nexcart.exception.ResourceNotFoundException;
@@ -28,14 +27,16 @@ public class StoreServiceImpl
     private final StoreRepository storeRepository;
     private final StoreMapper storeMapper;
     private final UserRepository userRepository;
+    private final UserAuthServiceImpl userAuthService;
 
 
     @Override
     public StoreResponse createStore(
-            StoreRequest request,
-            User currentUser
+            StoreRequest request
     ) {
-        validateSeller(currentUser);
+        User seller = userAuthService.getAuthenticatedUser();
+
+        userAuthService.validateSeller(seller);
 
         if (storeRepository.existsByName(
                 request.getName()
@@ -51,7 +52,7 @@ public class StoreServiceImpl
 
         Store store = storeMapper.toEntity(
                 request,
-                currentUser
+                seller
         );
 
         store.setSlug(slug);
@@ -108,9 +109,11 @@ public class StoreServiceImpl
 
     @Override
     public List<StoreResponse> getMyStores(
-            User currentUser
     ) {
-        return storeRepository.findByOwner(currentUser)
+        User seller = userAuthService.getAuthenticatedUser();
+
+        userAuthService.validateSeller(seller);
+        return storeRepository.findByOwner(seller)
                 .stream()
                 .map(storeMapper::toResponse)
                 .toList();
@@ -138,13 +141,15 @@ public class StoreServiceImpl
     @Override
     public StoreResponse updateStore(
             Long storeId,
-            StoreRequest request,
-            User currentUser
+            StoreRequest request
     ) {
+        User seller = userAuthService.getAuthenticatedUser();
+
+        userAuthService.validateSeller(seller);
         Store store = storeRepository
                 .findByIdAndOwner(
                         storeId,
-                        currentUser
+                        seller
                 )
                 .orElseThrow(() ->
                         new ResourceNotFoundException(
@@ -187,24 +192,6 @@ public class StoreServiceImpl
         return storeMapper.toResponse(
                 updatedStore
         );
-    }
-
-    private void validateSeller(
-            User currentUser
-    ) {
-        boolean isSeller = currentUser.getRoles()
-                .stream()
-                .anyMatch(role ->
-                        role.getName()
-                                == RoleName.ROLE_SELLER
-                );
-
-        if (!isSeller) {
-
-            throw new BadRequestException(
-                    "Only sellers can create stores"
-            );
-        }
     }
 
     private String generateUniqueSlug(
