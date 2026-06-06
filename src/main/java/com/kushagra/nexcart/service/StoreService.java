@@ -9,8 +9,7 @@ import java.util.List;
 public interface StoreService {
 
     StoreResponse createStore(
-            StoreRequest request,
-            User currentUser
+            StoreRequest request
     );
 
     StoreResponse getStoreById(
@@ -24,7 +23,6 @@ public interface StoreService {
     List<StoreResponse> getAllStores();
 
     List<StoreResponse> getMyStores(
-            User currentUser
     );
 
     List<StoreResponse> getStoresBySeller(
@@ -33,7 +31,6 @@ public interface StoreService {
 
     StoreResponse updateStore(
             Long storeId,
-            StoreRequest request,
-            User currentUser
+            StoreRequest request
     );
 }

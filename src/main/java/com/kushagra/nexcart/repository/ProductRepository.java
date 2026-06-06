@@ -42,8 +42,21 @@ public interface ProductRepository
             Pageable pageable
     );
 
-    Page<Product> findByStoreSlug(
-            String slug,
+    Page<Product> findByCategories_IdAndStatus(
+            Long categoryId,
+            ProductStatus status,
+            Pageable pageable
+    );
+
+    Page<Product> findByStoreIdAndStatus(
+            Long storeId,
+            ProductStatus status,
+            Pageable pageable
+    );
+
+    Page<Product> findByNameContainingIgnoreCaseAndStatus(
+            String keyword,
+            ProductStatus status,
             Pageable pageable
     );
 

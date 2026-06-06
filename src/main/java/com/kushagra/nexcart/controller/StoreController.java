@@ -2,14 +2,12 @@ package com.kushagra.nexcart.controller;
 
 import com.kushagra.nexcart.dto.request.StoreRequest;
 import com.kushagra.nexcart.dto.response.StoreResponse;
-import com.kushagra.nexcart.entity.User;
 import com.kushagra.nexcart.service.StoreService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,14 +26,11 @@ public class StoreController {
     createStore(
             @Valid
             @RequestBody
-            StoreRequest request,
-            @AuthenticationPrincipal
-            User currentUser
+            StoreRequest request
     ) {
         StoreResponse response =
                 storeService.createStore(
-                        request,
-                        currentUser
+                        request
                 );
         return new ResponseEntity<>(
                 response,
@@ -84,12 +79,10 @@ public class StoreController {
     @GetMapping("/myStores")
     public ResponseEntity<List<StoreResponse>>
     getMyStores(
-            @AuthenticationPrincipal
-            User currentUser
     ) {
 
         List<StoreResponse> response =
-                storeService.getMyStores(currentUser);
+                storeService.getMyStores();
 
         return ResponseEntity.ok(response);
     }
@@ -116,16 +109,12 @@ public class StoreController {
 
             @Valid
             @RequestBody
-            StoreRequest request,
-
-            @AuthenticationPrincipal
-            User currentUser
+            StoreRequest request
     ) {
         StoreResponse response =
                 storeService.updateStore(
                         storeId,
-                        request,
-                        currentUser
+                        request
                 );
         return ResponseEntity.ok(response);
     }
