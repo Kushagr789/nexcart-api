@@ -4,6 +4,7 @@ import jakarta.validation.constraints.*;
 
 import lombok.*;
 
+import java.math.BigDecimal;
 import java.util.Set;
 
 @Getter
@@ -23,7 +24,7 @@ public class ProductRequest {
 
     @NotNull(message = "Price is required")
     @Positive(message = "Price must be greater than 0")
-    private Double price;
+    private BigDecimal price;
 
     @NotNull(message = "Stock quantity is required")
     @Min(value = 0, message = "Stock cannot be negative")

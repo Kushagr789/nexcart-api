@@ -1,14 +1,17 @@
 package com.kushagra.nexcart.repository;
 
-import com.kushagra.nexcart.entity.Cart;
-import com.kushagra.nexcart.entity.User;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.Optional;
+import com.kushagra.nexcart.entity.Cart;
+import com.kushagra.nexcart.entity.User;
+import com.kushagra.nexcart.enums.CartStatus;
 
-public interface CartRepository
-        extends JpaRepository<Cart, Long> {
+public interface CartRepository extends JpaRepository<Cart, Long> {
 
-    Optional<Cart> findByUser(User user);
+    Optional<Cart> findByCustomerAndStatus(
+            User customer,
+            CartStatus status
+    );
 }
