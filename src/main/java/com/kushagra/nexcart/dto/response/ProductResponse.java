@@ -4,6 +4,7 @@ import com.kushagra.nexcart.enums.ProductStatus;
 
 import lombok.*;
 
+import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.Set;
 
@@ -20,7 +21,7 @@ public class ProductResponse {
 
     private String description;
 
-    private Double price;
+    private BigDecimal price;
 
     private Integer stockQuantity;
 
