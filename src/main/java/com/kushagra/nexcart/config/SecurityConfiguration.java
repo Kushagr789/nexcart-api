@@ -1,5 +1,6 @@
 package com.kushagra.nexcart.config;
 
+import com.kushagra.nexcart.constants.AppConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -52,7 +53,7 @@ public class SecurityConfiguration {
         http.csrf(csrf -> csrf.disable())
                 .cors(Customizer.withDefaults())
                 .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/auth/**")
+                .requestMatchers(AppConstants.publicUrls)
                 .permitAll()
                 .anyRequest()
                 .authenticated())
