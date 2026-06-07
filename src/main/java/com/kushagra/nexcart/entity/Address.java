@@ -3,6 +3,10 @@ package com.kushagra.nexcart.entity;
 import jakarta.persistence.*;
 
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "addresses")
@@ -38,10 +42,16 @@ public class Address {
     @Column(nullable = false, length = 100)
     private String country;
 
-    @Column(nullable = false)
+    @Builder.Default
     private Boolean isDefault = false;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
+
+    @CreationTimestamp
+    private LocalDateTime createdAt;
+
+    @UpdateTimestamp
+    private LocalDateTime updatedAt;
 }
